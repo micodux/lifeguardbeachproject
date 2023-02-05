@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>beach Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	<Script>
+		//validates 3 of the main fields to ensure there is some DQ and no empty fields in the DB
+		function validateForm() {
+			var errormessage ="All fields must be filled out";
+  if (document.getElementById("lifeguardfirstname").value=="") {
+    alert(errormessage);
+	return false;
+  }
+	else if (document.getElementById("lifeguardlastname").value=="") {
+		alert(errormessage);
+		return false;
+	}
+	else if (document.getElementById("qualitificationlevel").value=="") {
+		alert(errormessage);
+		return false;
+	}
+		}
+	</Script>
+</head>
+<body>
+	<header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0296ff85;">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+                  <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Beaches">Beaches</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="#">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+      </header>
+<br>
+<br>
+	<div class = "container">
+		<div class = "row">
+			<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class = "text-center"> Create New beach </h1>
+				<div class = "card-body">
+					<form th:action="@{/AdminLifeguards}" th:object = "${Lifeguard}" method="POST" onsubmit="return validateForm()">
+						<div class ="form-group">
+							<label>Lifeguard First Name </label>
+							<input
+							type = "text"
+							name = "lifeguardfirstname"
+							th:field = "*{lifeguardfirstname}"
+							class = "form-control"
+							placeholder="Enter Lifeguard First Name" 
+							/>
+						</div>
+						
+						<div class ="form-group">
+							<label> Lifeguard Last Name </label>
+							<input
+							type = "text"
+							name = "lifeguardlastname"
+							th:field = "*{lifeguardlastname}"
+							class = "form-control"
+							placeholder="Enter Lifeguard Last Name" 
+							/>
+						</div>
+						
+						<div class ="form-group">
+							<label> Lifeguard Qualification Level </label>
+							<input
+							type = "text"
+							name = "qualitificationlevel"
+							id="qualitificationlevel"
+							th:field = "*{lifeguardqualificationlevel}"
+							class = "form-control"
+							placeholder="Enter Lifeguard Qualitification level" 
+							/>
+						</div>
+
+						
+						</div>
+					
+						<div class = "box-footer">
+							<button type="submit" class = "btn btn-primary">
+								Submit
+							</button>
+						</div>
+					</form>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

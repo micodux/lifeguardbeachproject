@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <header>
+      <!-- start of bootstrap nav bar -->
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0296ff85;">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+                  <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Beaches">Beaches</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="#">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+      </header>
+      <!-- end of bootstrap nav bar -->
+      <div class="container-fluid">
+      <div class="alert alert-danger" role="alert" id="comments">
+        Todays comments: <strong th:text="${Beach.comments}">  </strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      </div>
+  
+      <!-- start of view page container -->
+      
+      <div class="container-fluid ">
+        <div class="row">
+          <div class="col-7">
+            <img class="beachimage border border-dark "th:src="${Beach.image}" alt="Beach information" width="100%" height="800px">
+          </div>
+          
+          <div class="col-3">
+            <h1 class="display-7" th:text="${Beach.beachname}"> </h1>
+            <span th:text="${Beach.location}"> </span>,
+            <span th:text="${Beach.county}"> </span>
+            
+            <ul>
+              <li>
+                <i class="fa fa-life-ring" aria-hidden="true"></i>
+                <label>Lifebuoy: </label>
+                <span th:text="${Beach.lifebouy}"></span>
+                
+              </li>
+              <li>
+                <i class="fa fa-medkit" aria-hidden="true"></i>
+                <label>Firstaid Kit: </label>
+                <span th:text="${Beach.Firstaid}"></span>
+              </li>
+              <li>
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <label>Lifeguard hut: </label>
+                <span th:text="${Beach.lifeguardhut}"></span>
+              </li>
+              <li>
+                <i class="fa fa-paw" aria-hidden="true"></i>
+                <label>Dogs allowed: </label>
+                <span th:text="${Beach.dogsallowed}"></span>
+              </li>
+              <li>
+                <i class="fa fa-map" aria-hidden="true"></i>
+                <label>Beach info board: </label>
+                <span th:text="${Beach.beachinfoboard}"></span>
+              </li>
+              <li>
+                <i class="fa fa-car" aria-hidden="true"></i>
+                <label>Parking: </label>
+                <span th:text="${Beach.parking}"></span>
+              </li>
+              <li>
+                <i class="fa fa-recycle" aria-hidden="true"></i>
+                <label>Litter bin: </label>
+                <span th:text="${Beach.litterbin}"></span>
+              </li>
+              <li>
+                <i class="fa fa-info-circle " aria-hidden="true"></i>
+                <label>Water safety signs: </label>
+                <span th:if="${Beach.watersafetysigns}"> <i class=" fa fa-check"> </span>
+              </li>
+            </ul>
+            <!-- Taken from Met Eireann.ie. This is a national weather widget across the county and the user can select whatever county they want https://www.met.ie/about-us/specialised-services/widgets-->
+              <iframe loading="lazy" src="https://www.met.ie/widgets/national" name="MEWarning" width="300" height="425" frameborder="1" marginwidth="0px" marginheight="0px" scrolling="no" allowfullscreen="allowfullscreen" style="border: 1px solid rgb(204, 204, 204);"></iframe>
+          </div>
+          <div class="col-2" style= "background-color: rgba(255, 255, 255, 0.705);">
+          <h1 class="display-6" style="color: red;">Lifeguards </h1>
+
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Experience</th>
+            </tr>
+            <tr th:each="lifeguard : ${Lifeguards}">
+              <td th:text="${lifeguard.lifeguardfirstname}"></td>
+              <td th:text="${lifeguard.lifeguardlastname}"></td>
+            </tr>
+          </table>
+            
+
+            
+            <ul th:each="lifeguard : ${Lifeguards}">
+            <li>
+            <label>First name: </label>
+            <i class="fa fa-male" aria-hidden="true"></i>
+            <span th:text="${lifeguard.lifeguardfirstname}"></span>
+          </li>
+          <li>
+            <label>Last name: </label>
+            <i class="fa fa-male" aria-hidden="true"></i>
+            <span th:text="${lifeguard.lifeguardlastname}"></span>
+          </li>
+          <li>
+            <label> Qualification:  </label>
+            <i class="fa fa-certificate" aria-hidden="true"></i>
+            <span th:text="${lifeguard.lifeguardqualificationlevel}"></span>
+          </li>
+          </ul>
+          <!-- taken from Met Eireann.ie. These are weather widgets for the counties. I pass in the same variable as above into Beach.County and it reads it and gives specific information for the mentioend area of beach https://www.met.ie/about-us/specialised-services/widgets-->
+          <iframe locading ="lazy" th:src="@{https://www.met.ie/widgets/county/{name}(name=${Beach.county})}" name="MEWarning" width="225" height="200" frameborder="0px" marginwidth="0px" marginheight="0px" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+
+          </div>
+        </div>
+      </div>   
+       <!--end of view page container  -->
+       
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

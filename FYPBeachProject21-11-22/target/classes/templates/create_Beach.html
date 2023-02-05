@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>beach Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	<Script>
+		//validates 3 of the main fields to make sure there is some value added for DQ
+		function validateForm() {
+
+			var errormessage ="All fields must be filled out";
+  if (document.getElementById("location").value=="") {
+    alert(errormessage);
+	return false;
+  }
+	else if (document.getElementById("beachname").value=="") {
+		alert(errormessage);
+		return false;
+	}
+	else if (document.getElementById("beachimage").value=="") {
+		alert(errormessage);
+		return false;
+	}
+		}
+	</Script>
+</head>
+<body>
+	<header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0296ff85;">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+                  <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Beaches">Beaches</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="#">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+      </header>
+<br>
+<br>
+	<div class = "container">
+		<div class = "row">
+			<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class = "text-center"> Create New beach </h1>
+				<div class = "card-body">
+					<form th:action="@{/AdminBeaches}" th:object = "${Beach}" method="POST" name="beachform" onsubmit="return validateForm()">
+						<div class ="form-group">
+							<label>Beach Name </label>
+							<input
+							type = "text"
+							name = "beachname"
+							th:field = "*{beachname}"
+							class = "form-control"
+							placeholder="Enter Beach Name" 
+							/>
+						</div>
+						
+						<div class ="form-group">
+							<label> Beach Town </label>
+							<input
+							type = "text"
+							name = "location"
+							th:field = "*{location}"
+							class = "form-control"
+							placeholder="Enter Beach Location" 
+							/>
+						</div>
+						
+						<div class ="form-group">
+							<label> Beach County </label>
+							<select th:field="*{county}" name="counties" id="counties">
+								<option th:value="carlow" th:text="Carlow"></option>
+								<option th:value="cavan" th:text="Cavan"></option>
+								<option th:value="clare"th:text="Clare"></option>
+								<option th:value="cork"th:text="Cork"></option>
+								<option th:value="donegal"th:text="Donegal"></option>
+								<option th:value="dublin"th:text="Dublin"></option>
+								<option th:value="galway"th:text="Galway"></option>
+								<option th:value="kerry"th:text="Kerry"></option>
+								<option th:value="kildare"th:text="Kildare"></option>
+								<option th:value="kilkenny"th:text="Kilkenny"></option>
+								<option th:value="laois"th:text="Laois"></option>
+								<option th:value="leitrim"th:text="Leitrim"></option>
+								<option th:value="limerick"th:text="Limerick"></option>
+								<option th:value="longford"th:text="Longford"></option>
+								<option th:value="louth"th:text="Louth"></option>
+								<option th:value="mayo"th:text="Mayo"></option>
+								<option th:value="meath"th:text="Meath"></option>
+								<option th:value="monaghan"th:text="Monaghan"></option>
+								<option th:value="offaly"th:text="Offaly"></option>
+								<option th:value="roscommon"th:text="Roscommon"></option>
+								<option th:value="sligo"th:text="Sligo"></option>
+								<option th:value="tipperary"th:text="Tipperary"></option>
+								<option th:value="waterford"th:text="Waterford"></option>
+								<option th:value="westmeath"th:text="Westmeath"></option>
+								<option th:value="wexford"th:text="Wexford"></option>
+								<option th:value="wicklow"th:text="Wicklow"></option>
+
+							</select>
+							<!-- <input
+							type = "text"
+							name = "county"
+							th:field = "*{county}"
+							class = "form-control"
+							placeholder="Enter Beach County" 
+							/> -->
+						</div>
+					
+						<div class ="form-group">
+							<label> Beach Image </label>
+							<textarea class ="form-control" placeholder="Enter Beach Image URL" th:field ="*{image}" name="beachimage" id="beachimage"></textarea>
+						</div>
+
+					</div>
+			</div>
+					<div class = "col-lg-5 card">
+						<h1 class = "text-center"> Set Beach Conditions </h1>
+						<div class = "card-body">
+							<form th:action="@{/AdminBeaches/{id} (id=${Beach.id})}" th:object = "${Beach}" method="POST" name="beachform" onsubmit="return validateForm()">
+							<div class ="form-group">
+								<label> Beach Dogs Allowed  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{dogsallowed}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+		
+							<div class ="form-group">
+								<label> Beach Info Board </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:checked = "*{beachinfoboard}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+							<div class ="form-group">
+								<label> Beach Water Safety Signs  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{watersafetysigns}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+		
+							<div class ="form-group">
+								<label> Beach Litterbin  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{litterbin}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+							
+							<div class ="form-group">
+								<label> Beach Lifebuoy  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{Lifebouy}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+		
+							<div class ="form-group">
+								<label> Beach Firstaid </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{firstaid}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+		
+							<div class ="form-group">
+								<label> Beach Parking  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{parking}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+		
+							<div class ="form-group">
+								<label> Beach Lifeguard Hut  </label>
+								<input
+								type = "checkbox"
+								name = "checkbox"
+								th:field = "*{lifeguardhut}"
+								class = "checkbox"
+								placeholder="Enter Beach County" 
+								/>
+							</div>
+							<div class ="form-group">
+								<label> Beach Comments </label>
+								<textarea class ="form-control" placeholder="Enter Beach Comments" th:field ="*{comments}"></textarea>
+							</div>
+								<div class = "box-footer" style="padding-left:300px; width: 50% ;">
+									<input type="submit" class = "btn btn-primary btn-lg">
+									</div>
+							</form>
+							</div>
+							
+					</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

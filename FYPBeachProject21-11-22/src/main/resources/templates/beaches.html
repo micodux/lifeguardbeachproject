@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Beach Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+	<header>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0296ff85;">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+                  <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Beaches">Beaches</a>
+                    </li>
+					<li>
+						<a class="nav-link" href="/reports/coastal">Reports</a>
+					</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="reporthomepage.html">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+      </header>
+	  <h1 class ="display-3 text-center">Beach list </h1>
+	
+	<div class ="container">
+		<input type="text" id="myInput" placeholder="Filter..." onkeyup="searchFunction()" style="width: 100%;font-size: 16px;padding: 12px 20px 12px 40px;border: 1px solid #ddd;margin-bottom: 12px;"/>
+		<table class = "table table-striped table-bordered" id="myTable">
+			<thead class = "table-dark">
+				<tr class="header">
+					<th> Beach Name</th>
+					<th> Beach Location</th>
+					<th> Beach County </th>
+					<th> Action</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "Beach: ${Beaches}">
+					<td th:text = "${Beach.beachname}"></td>
+					<td th:text = "${Beach.location}"></td>
+					<td th:text = "${Beach.county}"></td>
+					<td>
+						<a th:href = "@{/Beaches/view/{id}(id=${Beach.id})}"
+						 class = "btn btn-primary">View</a>
+					
+					</td>
+				</tr>
+			</tbody>
+		
+		</table>
+		<!-- <span th:each="Lifeguard: ${Lifeguards}"></span>
+		<span th:text="${Lifeguard.lifeguardfirstname}"></span> -->
+		<div class="container-fluid">
+		
+			<!-- using google map and excel file to map the points of each beach. Its from google my maps and the information is injected into a excel file. -->
+			<!-- https://www.google.com/maps/d/u/0/edit?mid=18FqwOJseKk7mPuipUOk-U5JOF5XHhus -->
+		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=18FqwOJseKk7mPuipUOk-U5JOF5XHhus&ehbc=2E312F" width="1000" height="750"></iframe>
+		</div>
+	</div>
+	<script>
+		// taken from stack overflow https://stackoverflow.com/questions/51187477/how-to-filter-a-html-table-using-simple-javascript
+		//calls function search function
+		const searchFunction = () => {
+			// goes tot he my table element in document and selects the table rows
+		const trs = document.querySelectorAll('#myTable tr:not(.header)')
+		// goes to the my input search field and selects the value inserted by user
+		const filter = document.querySelector('#myInput').value
+	
+		const regex = new RegExp(filter, 'i')
+		// returns a boolean if the inserted value is found in the table data cell
+		const isFoundInTds = td => regex.test(td.innerHTML)
+		// passes this value to isFound const
+		const isFound = childrenArr => childrenArr.some(isFoundInTds)
+		//returns the value on the table
+		const setTrStyleDisplay = ({ style, children }) => {
+			style.display = isFound([
+			...children // <-- All columns
+			]) ? '' : 'none' 
+		}
+		// repeats for each iteration of the inserted value appears
+  		trs.forEach(setTrStyleDisplay)
+}
+	</script>
+</body>
+</html>
